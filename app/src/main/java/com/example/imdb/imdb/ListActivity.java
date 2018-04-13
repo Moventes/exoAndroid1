@@ -8,9 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ListActivity extends AppCompatActivity {
 
     public static String DETAILS_ACTIVITY_PARAM = "com.example.imdb.imdb.DETAILS_ACTIVITY_PARAM";
@@ -22,20 +19,14 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.list_activity);
         ListView listview = (ListView) findViewById(R.id.movies_list);
 
-        final List<Movie> movies = new ArrayList<>();
-
-        movies.add(new Movie("Intersellar"));
-        movies.add(new Movie("L'empire contre attaque"));
-        movies.add(new Movie("Avengers"));
-
-        ListAdapter adapter = new ListAdapter(this, R.layout.list_item, movies);
+        ListAdapter adapter = new ListAdapter(this, R.layout.list_item, MovieAccessor.getInstance().getMovies());
 
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Intent detailsActivity = new Intent(ListActivity.this, DetailsActivity.class);
-                detailsActivity.putExtra(DETAILS_ACTIVITY_PARAM, movies.get(position).getTitle());
+                detailsActivity.putExtra(DETAILS_ACTIVITY_PARAM, MovieAccessor.getInstance().getMovies().get(position).getIdentifier());
                 ListActivity.this.startActivity(detailsActivity);
             }
         });

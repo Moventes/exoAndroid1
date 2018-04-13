@@ -15,10 +15,10 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.details_activity);
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra(ListActivity.DETAILS_ACTIVITY_PARAM);
+        Movie movie = MovieAccessor.getInstance().getMovieById(intent.getStringExtra(ListActivity.DETAILS_ACTIVITY_PARAM));
 
         // Capture the layout's TextView and set the string as its text
         TextView textView = findViewById(R.id.title);
-        textView.setText(message);
+        textView.setText(movie.getTitle());
     }
 }
