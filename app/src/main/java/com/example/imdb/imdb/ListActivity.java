@@ -56,7 +56,7 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Intent detailsActivity = new Intent(ListActivity.this, DetailsActivity.class);
-                detailsActivity.putExtra(DETAILS_ACTIVITY_PARAM, accessor.getMovies().get(position).getIdentifier());
+                detailsActivity.putExtra(DETAILS_ACTIVITY_PARAM, adapter.getData().get(position).getIdentifier());
                 ListActivity.this.startActivity(detailsActivity);
             }
         });
