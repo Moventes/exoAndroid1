@@ -22,6 +22,10 @@ public class ListAdapter extends ArrayAdapter<Movie> {
         this.movies = movies;
     }
 
+    public List<Movie> getData() {
+        return this.movies;
+    }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
