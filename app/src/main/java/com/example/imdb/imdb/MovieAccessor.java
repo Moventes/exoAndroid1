@@ -43,7 +43,14 @@ public class MovieAccessor {
     }
 
     private Movie parseJsonObject(JSONObject item) throws JSONException {
-        return new Movie(item.getString("imdbID"), item.getString("Title"), item.getString("Poster"));
+        return new Movie(
+                item.has("imdbID") ? item.getString("imdbID") : null,
+                item.has("Title") ? item.getString("Title") : null,
+                item.has("Poster") ? item.getString("Poster") : null,
+                item.has("Plot") ? item.getString("Plot") : null,
+                item.has("Released") ? item.getString("Released") : null,
+                item.has("Director") ? item.getString("Director") : null
+        );
     }
 
     public Movie getMovieById(String identifier) throws ExecutionException, InterruptedException, IOException, JSONException {

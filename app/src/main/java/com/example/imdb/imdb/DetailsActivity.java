@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
 
@@ -14,6 +17,8 @@ import java.util.concurrent.ExecutionException;
 public class DetailsActivity extends AppCompatActivity {
 
     private MovieAccessor accessor = new MovieAccessor();
+
+    ImageLoader imageLoader = ImageLoader.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,8 +34,19 @@ public class DetailsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Capture the layout's TextView and set the string as its text
-        TextView textView = findViewById(R.id.title);
-        textView.setText(movie.getTitle());
+        ImageView poster = findViewById(R.id.poster);
+        imageLoader.displayImage(movie.getPoster(), poster);
+
+        TextView title = findViewById(R.id.title);
+        title.setText(movie.getTitle());
+
+        TextView director = findViewById(R.id.director);
+        director.setText(movie.getDirector());
+
+        TextView plot = findViewById(R.id.plot);
+        plot.setText(movie.getPlot());
+
+        TextView release = findViewById(R.id.release);
+        release.setText(movie.getRelease());
     }
 }
