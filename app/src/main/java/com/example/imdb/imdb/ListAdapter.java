@@ -7,7 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.List;
 
@@ -16,10 +20,14 @@ public class ListAdapter extends ArrayAdapter<Movie> {
     private final Context context;
     private List<Movie> movies;
 
+    ImageLoader imageLoader = ImageLoader.getInstance();
+
     public ListAdapter(@NonNull Context context, int resource, List<Movie> movies) {
         super(context, resource, movies);
         this.context = context;
         this.movies = movies;
+
+        imageLoader.init(ImageLoaderConfiguration.createDefault(context.getApplicationContext()));
     }
 
     public List<Movie> getData() {
@@ -35,6 +43,9 @@ public class ListAdapter extends ArrayAdapter<Movie> {
 
         TextView textView = (TextView) rowView.findViewById(R.id.title);
         textView.setText(movies.get(position).getTitle());
+
+        ImageView poster = (ImageView) rowView.findViewById(R.id.poster);
+        imageLoader.displayImage(movies.get(position).getPoster(), poster);
 
         return rowView;
     }
