@@ -1,6 +1,9 @@
 package com.example.imdb.imdb;
 
-public class Movie {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Movie implements Parcelable {
 
     private String identifier;
     private String title;
@@ -24,6 +27,15 @@ public class Movie {
         this.plot = plot;
         this.release = release;
         this.director = director;
+    }
+
+    private Movie(Parcel in) {
+        this.identifier = in.readString();
+        this.title = in.readString();
+        this.poster = in.readString();
+        this.plot = in.readString();
+        this.release = in.readString();
+        this.director = in.readString();
     }
 
     public String getIdentifier() {
@@ -73,4 +85,28 @@ public class Movie {
     public void setDirector(String director) {
         this.director = director;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(this.identifier);
+        out.writeString(this.title);
+        out.writeString(this.poster);
+        out.writeString(this.plot);
+        out.writeString(this.release);
+        out.writeString(this.director);
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 }

@@ -21,8 +21,10 @@ import java.util.concurrent.ExecutionException;
 public class ListActivity extends AppCompatActivity {
 
     public static String DETAILS_ACTIVITY_PARAM = "com.example.imdb.imdb.DETAILS_ACTIVITY_PARAM";
+    private static String FOUND_MOVIES = "com.example.imdb.imdb.FOUND_MOVIES";
 
     private MovieAccessor accessor = new MovieAccessor();
+    private ListAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,7 +35,13 @@ public class ListActivity extends AppCompatActivity {
         Button submit = (Button) findViewById(R.id.submit);
         ListView listview = (ListView) findViewById(R.id.movies_list);
 
-        final ListAdapter adapter = new ListAdapter(this, R.layout.list_item, new ArrayList<Movie>());
+        ArrayList<Movie> movies = new ArrayList<Movie>();
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(FOUND_MOVIES)) {
+            movies = savedInstanceState.getParcelableArrayList(FOUND_MOVIES);
+        }
+
+        adapter = new ListAdapter(this, R.layout.list_item, movies);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,5 +68,11 @@ public class ListActivity extends AppCompatActivity {
                 ListActivity.this.startActivity(detailsActivity);
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState (Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(FOUND_MOVIES, adapter.getData());
     }
 }

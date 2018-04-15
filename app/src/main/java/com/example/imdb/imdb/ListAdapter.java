@@ -13,16 +13,16 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class ListAdapter extends ArrayAdapter<Movie> {
 
     private final Context context;
-    private List<Movie> movies;
+    private ArrayList<Movie> movies;
 
     ImageLoader imageLoader = ImageLoader.getInstance();
 
-    public ListAdapter(@NonNull Context context, int resource, List<Movie> movies) {
+    public ListAdapter(@NonNull Context context, int resource, ArrayList<Movie> movies) {
         super(context, resource, movies);
         this.context = context;
         this.movies = movies;
@@ -30,7 +30,7 @@ public class ListAdapter extends ArrayAdapter<Movie> {
         imageLoader.init(ImageLoaderConfiguration.createDefault(context.getApplicationContext()));
     }
 
-    public List<Movie> getData() {
+    public ArrayList<Movie> getData() {
         return this.movies;
     }
 
